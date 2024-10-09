@@ -14,7 +14,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            direction: rtl; /* הגדרת יישור לימין */
+            direction: rtl;
         }
         .container {
             background-color: #282828;
@@ -22,7 +22,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             width: 300px;
-            text-align: right; /* הגדרת טקסט לימין */
+            text-align: right;
         }
         h1 {
             color: #1DB954;
@@ -40,7 +40,7 @@
             border: none;
             border-radius: 4px;
             font-size: 1em;
-            text-align: right; /* יישור הקלט לימין */
+            text-align: right;
         }
         button {
             background-color: #1DB954;
@@ -77,7 +77,7 @@
         <label for="song3">כמות ההשמעות לשיר השלישי</label>
         <input type="number" id="song3" placeholder="הזינו את כמות ההשמעות" required>
 
-        <label for="totalListens"> כמות מאזינים חודשיים</label>
+        <label for="totalListens">כמות מאזינים חודשיים</label>
         <input type="number" id="totalListens" placeholder="הזינו את כמות המאזינים" required>
 
         <button onclick="calculateSearches()">חישוב כמות החיפושים החודשית</button>
@@ -86,37 +86,29 @@
     </div>
 
     <script>
-function calculateSearches() {
-    // קבלת הנתונים שהוזנו
-    const song1 = parseFloat(document.getElementById('song1').value) || 0;
-    const song2 = parseFloat(document.getElementById('song2').value) || 0;
-    const song3 = parseFloat(document.getElementById('song3').value) || 0;
-    const totalListens = parseFloat(document.getElementById('totalListens').value) || 0;
+        function calculateSearches() {
+            const song1 = parseFloat(document.getElementById('song1').value) || 0;
+            const song2 = parseFloat(document.getElementById('song2').value) || 0;
+            const song3 = parseFloat(document.getElementById('song3').value) || 0;
+            const totalListens = parseFloat(document.getElementById('totalListens').value) || 0;
 
-    // חישוב ממוצע ההשמעות של שלושת השירים הפופולריים ביותר
-    const averageTopSongs = (song1 + song2 + song3) / 3;
+            const averageTopSongs = (song1 + song2 + song3) / 3;
+            const alpha = 0.5;
+            const beta = 0.5;
+            const estimatedSearches = (alpha * averageTopSongs) + (beta * totalListens);
 
-    // הגדרת המקדמים α ו-β
-    const alpha = 0.5; // משקל ההשמעות של השירים הפופולריים
-    const beta = 0.5; // משקל ההאזנות החודשיות הכלליות
+            const lastTwoDigits = estimatedSearches % 100;
+            let roundedSearches;
+            if (lastTwoDigits > 50) {
+                roundedSearches = Math.ceil(estimatedSearches / 100) * 100;
+            } else {
+                roundedSearches = Math.floor(estimatedSearches / 100) * 100;
+            }
 
-    // חישוב כמות החיפושים החודשית
-    const estimatedSearches = (alpha * averageTopSongs) + (beta * totalListens);
-
-    // עיגול התוצאה למאה הקרובה לפי ההסבר
-    const lastTwoDigits = estimatedSearches % 100; // השגת שני המספרים האחרונים
-    let roundedSearches;
-    if (lastTwoDigits > 50) {
-        roundedSearches = Math.ceil(estimatedSearches / 100) * 100; // עיגול כלפי מעלה למאה הקרובה
-    } else {
-        roundedSearches = Math.floor(estimatedSearches / 100) * 100; // עיגול כלפי מטה למאה הקרובה
-    }
-
-    // הצגת התוצאה
-    const resultDiv = document.getElementById('result');
-    resultDiv.style.display = 'block';
-    resultDiv.innerText = `כמות החיפושים החודשית ${roundedSearches}`;
-}
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerText = `כמות החיפושים החודשית: ${roundedSearches}`;
+        }
     </script>
 </body>
 </html>
