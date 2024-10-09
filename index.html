@@ -98,7 +98,7 @@ function calculateSearches() {
 
     // הגדרת המקדמים α ו-β
     const alpha = 0.5; // משקל ההשמעות של השירים הפופולריים
-    const beta = 0.5;  // משקל ההאזנות החודשיות הכלליות
+    const beta = 0.5; // משקל ההאזנות החודשיות הכלליות
 
     // חישוב כמות החיפושים החודשית
     const estimatedSearches = (alpha * averageTopSongs) + (beta * totalListens);
@@ -115,7 +115,7 @@ function calculateSearches() {
     // הצגת התוצאה
     const resultDiv = document.getElementById('result');
     resultDiv.style.display = 'block';
-    resultDiv.innerText = כמות החיפושים החודשית ${roundedSearches};
+    resultDiv.innerText = `כמות החיפושים החודשית ${roundedSearches}`;
 }
     </script>
 </body>
