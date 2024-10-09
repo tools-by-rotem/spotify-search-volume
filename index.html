@@ -97,17 +97,18 @@
             const beta = 0.5;
             const estimatedSearches = (alpha * averageTopSongs) + (beta * totalListens);
 
-            const lastTwoDigits = estimatedSearches % 100;
-            let roundedSearches;
-            if (lastTwoDigits > 50) {
-                roundedSearches = Math.ceil(estimatedSearches / 100) * 100;
-            } else {
-                roundedSearches = Math.floor(estimatedSearches / 100) * 100;
-            }
+            // חילוק התוצאה ב-1000
+            const searchesAfterDivision = estimatedSearches / 1000;
+
+            // עיגול התוצאה לאלף הקרוב
+            const roundedSearches = Math.round(searchesAfterDivision / 1000) * 1000;
+
+            // הוספת פסיקים לתוצאה
+            const formattedResult = roundedSearches.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
             const resultDiv = document.getElementById('result');
             resultDiv.style.display = 'block';
-            resultDiv.innerText = `כמות החיפושים החודשית: ${roundedSearches}`;
+            resultDiv.innerText = `כמות החיפושים החודשית: ${formattedResult}`;
         }
     </script>
 </body>
